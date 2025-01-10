@@ -4,18 +4,30 @@
              x:Class="SaveUp.Views.StartPage"
              Title="Start Page">
 
-    <StackLayout Padding="20" VerticalOptions="Center">
-        <Label Text="Willkommen bei SaveUp" 
-               FontSize="Large" 
-               HorizontalOptions="Center" 
-               Margin="0,0,0,20"/>
+    <Grid>
+        <!-- Hauptinhalt -->
+        <StackLayout Padding="20" VerticalOptions="Center">
+            <Label Text="Willkommen bei SaveUp" 
+                   FontSize="Large" 
+                   HorizontalOptions="Center" 
+                   Margin="0,0,0,20"/>
 
-        <Button Text="Sparen"
-                Clicked="OnCreateProductClicked"
-                Margin="0,0,0,10"/>
+            <Button Text="Sparen"
+                    Clicked="OnCreateProductClicked"
+                    Margin="0,0,0,10"/>
 
-        <Button Text="Liste anzeigen"
-                Clicked="OnShowListClicked"/>
-    </StackLayout>
+            <Button Text="Liste anzeigen"
+                    Clicked="OnShowListClicked"/>
+        </StackLayout>
+
+        <!-- Footer -->
+        <Label Text="App made by Nesim &amp; Anthony © 2025" 
+            FontSize="Small" 
+            HorizontalOptions="Center"
+            VerticalOptions="End"
+            Margin="0,10,0,10"
+       TextColor="Gray"/>
+
+    </Grid>
 
 </ContentPage>

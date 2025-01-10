@@ -18,13 +18,14 @@
                     <DataTemplate>
                         <StackLayout Padding="10" Orientation="Vertical">
                             <Label Text="{Binding Description}" FontSize="Medium" />
-                            <Label Text="{Binding Price, StringFormat='Preis: {0:C}'}" FontSize="Small" />
+                            <!-- Währungsformat: CHF -->
+                            <Label Text="{Binding Price, StringFormat='Preis: CHF {0:0.00}.-'}" FontSize="Small" />
                             <Label Text="{Binding Date, StringFormat='Erstellt am: {0:dd.MM.yyyy HH:mm}'}" FontSize="Small" />
 
                             <!-- Löschen-Button -->
                             <Button Text="Löschen"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:MainViewModel}}, Path=DeleteCommand}"
-                                    CommandParameter="{Binding}" />
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:MainViewModel}}, Path=DeleteCommand}"
+                        CommandParameter="{Binding}" />
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
@@ -32,8 +33,10 @@
 
             <!-- Alle löschen (Clear) Button -->
             <Button Text="Alle löschen"
-                    Command="{Binding ClearCommand}"
-                    Margin="0,10,0,0" />
+            Command="{Binding ClearCommand}"
+            Margin="0,10,0,0"
+            BackgroundColor="Red"
+            TextColor="White" />
         </StackLayout>
     </ScrollView>
 </ContentPage>
