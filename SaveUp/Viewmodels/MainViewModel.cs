@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using SaveUp.Models;
@@ -48,6 +49,7 @@ namespace SaveUp.ViewModels
         public ICommand SaveCommand { get; }
         public ICommand ClearCommand { get; }
         public ICommand DeleteCommand { get; }
+        public ICommand SortCommand { get; }
 
         public MainViewModel()
         {
@@ -55,6 +57,7 @@ namespace SaveUp.ViewModels
             SaveCommand = new Command(OnSave);
             ClearCommand = new Command(OnClear);
             DeleteCommand = new Command<SavedItem>(OnDelete);
+            SortCommand = new Command<int>(OnSort);  // Change here
 
             // Load persisted data
             _ = LoadDataAsync();
@@ -111,6 +114,48 @@ namespace SaveUp.ViewModels
                 SavedItems.Remove(item);
                 var dataService = new DataService();
                 await dataService.SaveDataAsync(SavedItems);
+            }
+        }
+
+        // Add a new property for SelectedSortIndex
+        private int selectedSortIndex;
+
+        public int SelectedSortIndex
+        {
+            get => selectedSortIndex;
+            set
+            {
+                if (selectedSortIndex != value)
+                {
+                    selectedSortIndex = value;
+                    OnPropertyChanged(nameof(SelectedSortIndex));
+                    OnSort(selectedSortIndex); // Update sorting logic
+                }
+            }
+        }
+
+        private void OnSort(int selectedSortIndex)
+        {
+            switch (selectedSortIndex)
+            {
+                case 0: // Preis aufsteigend
+                    SavedItems = new ObservableCollection<SavedItem>(SavedItems.OrderBy(item => item.Price));
+                    break;
+                case 1: // Preis absteigend
+                    SavedItems = new ObservableCollection<SavedItem>(SavedItems.OrderByDescending(item => item.Price));
+                    break;
+                case 2: // Alphabetisch aufsteigend
+                    SavedItems = new ObservableCollection<SavedItem>(SavedItems.OrderBy(item => item.Description));
+                    break;
+                case 3: // Alphabetisch absteigend
+                    SavedItems = new ObservableCollection<SavedItem>(SavedItems.OrderByDescending(item => item.Description));
+                    break;
+                case 4: // Datum aufsteigend
+                    SavedItems = new ObservableCollection<SavedItem>(SavedItems.OrderBy(item => item.Date));
+                    break;
+                case 5: // Datum absteigend
+                    SavedItems = new ObservableCollection<SavedItem>(SavedItems.OrderByDescending(item => item.Date));
+                    break;
             }
         }
 
